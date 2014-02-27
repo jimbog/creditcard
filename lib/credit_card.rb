@@ -1,11 +1,11 @@
 require_relative 'luhn10'
 
 class CreditCard
-  attr_reader :name, :number, :credit_line, :balance
+  attr_reader :name, :number, :credit_limit, :balance
   def initialize options = {}
     @name = options[:name]
     @number = options[:number]
-    @credit_line = options[:credit_line] || 0
+    @credit_limit = options[:credit_limit] || 0
     @balance =  0
   end
 
@@ -15,7 +15,7 @@ class CreditCard
   end
 
   def charge(amount)
-      if @balance + amount > @credit_line
+      if @balance + amount > @credit_limit
         #raise error
       else
         @balance += amount
