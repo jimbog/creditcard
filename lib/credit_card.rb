@@ -1,7 +1,8 @@
 require_relative 'luhn10'
 
 class CreditCard
-  attr_reader :name, :number, :credit_limit, :balance
+  attr_reader :name, :number, :credit_limit, :balance, :valid_number
+
   def initialize options = {}
     @name = options[:name]
     @number = options[:number]
