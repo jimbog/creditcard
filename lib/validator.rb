@@ -18,9 +18,12 @@ module ExtendedArray
   end
 end
 
-class Luhn10
+class Validator
   using ExtendedArray
-  attr_reader :num_arr
+  attr_reader :num_arr, :valid, :luhn10_valid, :length_valid
+
+  MAX_LENGTH = 19 
+  MIN_LENGTH = 3 #arbitrarly imposed, change as needed
 
   def initialize(num)
     @num = num
@@ -37,6 +40,7 @@ class Luhn10
     end
 
   end
+
   def sum_of_digits
     double_every_other.sum + @num_arr.reverse[1..-1].odd_indexes.sum
   end
@@ -45,8 +49,15 @@ class Luhn10
     @num_arr.last
   end
 
-  def valid?
+  def luhn10_valid?
     num_to_arr(sum_of_digits * 9).last == check_digit
   end
-end
 
+  def length_valid?
+   @num_arr.length.between?(MIN_LENGTH, MAX_LENGTH)
+  end
+
+  def valid?
+    luhn10_valid? and length_valid?
+  end
+end

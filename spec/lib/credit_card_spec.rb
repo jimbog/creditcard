@@ -23,8 +23,13 @@ describe CreditCard do
     end
 
     context "when given an incorrect cc number" do
-      it "returns false" do
+      it "returns false if failing luhn10 sum" do
         cc = CreditCard.new name: "Quincy", number: 1234567890123456
+        expect(cc.valid_number?).to be_false
+      end
+      
+      it "returns false if exceeds 19 digits" do
+        cc = CreditCard.new name: "Quincy", number: 12345678901234567890
         expect(cc.valid_number?).to be_false
       end
     end

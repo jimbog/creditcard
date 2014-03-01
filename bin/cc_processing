@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require_relative '../lib/credit_card'
+require_relative '../lib/parse'
+
+accounts = []
+
+def parse_line(text, accounts)
+  text = "ignore" if text == "\n"
+  parsed = Parse.new(text)
+
+  case parsed.transaction.downcase
+  when "add"
+    if not parsed.name.nil? or parsed.account_number.nil? or parsed.amount.nil?
+      accounts << CreditCard.new(name: parsed.name, number: parsed.account_number, credit_limit: parsed.credit_limit)
+    end
+  when "credit"
+    cc = accounts.find { |account| account.name == parsed.name }
+    cc.credit(parsed.amount) if cc.valid_number?
+
+  when "charge"
+    cc = accounts.find { |account| account.name == parsed.name }
+    cc.charge(parsed.amount) if cc.valid_number?
+    #puts "the new balance is #{cc.balance}"
+
+  when "ignore"
+    #do nothing
+  end
+
+end
+
+def summary(accounts)
+  accounts.sort_by! { |account| account.name }
+  accounts.each do |account|
+    if account.valid_number?
+      puts "#{account.name}: $#{account.balance}"
+    else
+      puts "#{account.name}: error"
+    end
+  end
+end
+
+loop do
+  text = gets
+
+  if text == "load\n"
+    puts "Enter filename"
+    filename = gets.chomp
+
+    File.open(filename) do |f|
+      f.each_line { |line| parse_line(line, accounts) }
+    end
+
+    puts "finished readin, enter another command transaction or 'summary' to finish"
+
+  elsif text == "summary\n"
+    break
+  else
+    parse_line(text, accounts)
+  end
+end
+
+summary(accounts) #print a summary of the accounts

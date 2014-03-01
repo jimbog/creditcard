@@ -1,0 +1,69 @@
+Basic Credit Card Processing
+----------------------------
+
+This program adds new credit card accounts, process charges and credits against them, and display summary information.
+
+Usage instructions
+==================
+
+This program uses Ruby 2.1
+
+In order to run the program from the command line, just type bin/cc_processing.
+To quit and print a summary you must type "summary" in the command line.
+To load a file to be processed, type load and then the path of the file to be loaded, like so "load myfile.txt".
+The program will continue receiving commands even when a file has been loaded, so just type "summary"
+The user may also paste multiple commands separated by line breaks.
+
+Design Decisions
+===============
+
+At the core of the program is the CreditCard class. This class creates new instances
+of credit cards accounts. It is initialized with a hash of options for the name,
+number and credit limit. Based on this initialization it thens validates for length
+and a luhn 10 checksum. The CreditCard class takes cares of credit and charge
+transactions that affect the balance property.
+
+The CreditCard class validates account numbers using the Validator class. The Validator class
+validates for length and the luhn 10 algorithm. There is a valid message this class
+passes and informs whoever calls it if all validations (length and luhn 10) have passed.
+It can also send individual messages for the validity of luhn 10 and length.
+
+The Parse class is used from the cc_processing executable. The Parse class parses
+lines and have methods send messages of the parsed input.
+
+Finally the user interacts with the program using the cc_processing file. This
+script has a constant loop to read commands from the command line or a file.
+
+Language Decisions
+=================
+
+Ruby was chosen as it's the language I use the most at the moment.
+Also:
+It allows for nice OOP design given it's OO nature.
+It is quite readable.
+It allows development using a TDD approach with the sweet Rspec DSL.
+The gems used are Rspec for the specs, guard for continuos testing
+
+Requirements
+============
+
+- three input commands must are handled, passed with space delimited arguments, via stdin or a file passed on the command line
+ - "Add" will create a new credit card for a given name, card number, and limit
+   - Card numbers are validated using Luhn 10
+   - New cards start with a $0 balance
+ - "Charge" will increase the balance of the card associated with the provided name by the amount specified
+   - Charges that would raise the balance over the limit are ignored as if they were declined
+   - Charges against Luhn 10 invalid cards are ignored
+ - "Credit" will decrease the balance of the card associated with the provided name by the amount specified
+   - Credits that would drop the balance below $0 will create a negative balance
+   - Credits against Luhn 10 invalid cards are ignored
+- when all input has been read and processed, a summary is generated and written to stdout
+ - the summary includes the name of each person followed by a colon and balance
+ - the names are displayed alphabetically
+ - it displays an "error" instead of the balance if the credit card number does not pass Luhn 10
+
+Input Assumptions:
+- all input will be space delimited
+- credit card numbers may vary in length, up to 19 characters
+- credit card numbers will always be numeric
+- amounts will always be prefixed with "$" and will be in whole dollars (no decimals)

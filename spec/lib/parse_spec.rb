@@ -3,15 +3,14 @@ require_relative '../../lib/parse'
 
 describe Parse do
   context "Initialization" do
-    let(:line) { Parse.new("   transaction   name")}
+    let(:line) { Parse.new("  Add Tom 123 $4000 ")}
 
-    it "creates an array of words ignoring spaces" do
-      expect(line.line_arr).to eq(["transaction", "name"])
+    it "parses the transaction ignoring the letter case" do
+      expect(line.transaction).to eq("add")
     end
 
-    it "parses the transaction and name" do
-      expect(line.transaction).to eq("transaction")
-      expect(line.name).to eq("name")
+    it "parses the name keeping the letter case" do
+      expect(line.name).to eq("Tom")
     end
   end
 

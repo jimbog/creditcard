@@ -1,17 +1,15 @@
-module ExtendArrary
-  refine Array do
-    def refined
-      self << "refined"
-    end
+filename = STDIN.gets.chomp()
 
-    def each_even
-      arr = []
-      self.each_with_index { |num, index| arr << num if index.even? }
-      arr
-    end
-  end
-end
+prompt = "> "
+txt = File.open(filename)
 
-using ExtendArrary
-p (0..10).to_a.each_even
-p [1,2,3].refined
+puts "Here's your file: #{filename}"
+puts txt.read()
+
+puts "I'll also ask you to type it again:"
+print prompt
+file_again = STDIN.gets.chomp()
+
+txt_again = File.open(file_again)
+
+puts txt_again.read()

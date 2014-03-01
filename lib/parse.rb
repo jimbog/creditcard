@@ -7,7 +7,7 @@ class Parse
   end
 
   def transaction
-    line_arr[0] 
+    line_arr[0].downcase
   end
 
   def name
