@@ -13,7 +13,7 @@ class Parse
   def name
     line_arr[1] 
   end
-  
+
   def account_number
     line_arr[2].to_i 
   end

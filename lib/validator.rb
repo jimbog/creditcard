@@ -54,7 +54,7 @@ class Validator
   end
 
   def length_valid?
-   @num_arr.length.between?(MIN_LENGTH, MAX_LENGTH)
+    @num_arr.length.between?(MIN_LENGTH, MAX_LENGTH)
   end
 
   def valid?

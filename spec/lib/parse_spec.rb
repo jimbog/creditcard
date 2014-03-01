@@ -33,7 +33,7 @@ describe Parse do
         expect(line.amount).to eq(100)
       end
     end
-    
+
     context "when it's a credit" do
       let(:line) { Parse.new("credit tom $100")}
       it "returns an amount" do

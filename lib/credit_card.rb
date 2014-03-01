@@ -16,15 +16,15 @@ class CreditCard
   end
 
   def charge(amount)
-      if @balance + amount > @credit_limit
-        #raise error
-      else
-        @balance += amount
-      end
+    if @balance + amount > @credit_limit
+      #raise error
+    else
+      @balance += amount
+    end
   end
 
   def credit(amount)
-      @balance -= amount
+    @balance -= amount
   end
 
 end

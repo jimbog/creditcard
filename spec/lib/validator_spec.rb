@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../lib/luhn10'
+require_relative '../../lib/validator'
 
 describe Validator do
   it "converts a number to an array" do
